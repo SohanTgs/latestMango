@@ -1,0 +1,148 @@
+{% extends 'admin/layouts/app.html' %}
+{% load static %}
+
+{% block panel %} 
+    <div class="row">  
+        <div class="col-md-12">
+            <div class="card">
+                <form action="" method="POST">
+                    {% csrf_token %} 
+                    <div class="card-body">
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label class="mb-4">Email Send Method</label>
+                                <select name="email_method" class="form-control" >
+                                    <option value="smtp" 
+                                        {% if general.json.name == 'smtp' %} 
+                                            selected 
+                                        {% endif %}
+                                    >
+                                        SMTP
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-6 text-right">
+                                <h6 class="mb-4">&nbsp;</h6>
+                                <button type="button" data-target="#testMailModal" data-toggle="modal" class="btn btn--info">Send Test Mail</button>
+                            </div>
+                        </div>
+                        <div class="form-row mt-4 d-none configForm" id="smtp">
+                            <div class="col-md-12">
+                                <h6 class="mb-2">SMTP Configuration</h6>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label class="font-weight-bold">Host <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" placeholder="e.g. smtp.googlemail.com" name="host" value="{{ general.json.EMAIL_HOST }}"/>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label class="font-weight-bold">Port <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" placeholder="Available port" name="port" value="{{ general.json.EMAIL_PORT }}"/>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label class="font-weight-bold">Encryption</label>
+                                <select class="form-control" name="enc">
+                                    <option value="ssl"
+                                        {% if general.json.EMAIL_USE_SSL == True %} 
+                                            selected 
+                                        {% endif %}
+                                    >
+                                        SSL
+                                    </option>
+                                    <option value="tls"
+                                        {% if general.json.EMAIL_USE_TLS == True %} 
+                                            selected 
+                                        {% endif %}
+                                    >
+                                        TLS
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label class="font-weight-bold">Username <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" placeholder="Normally your email address" name="username" value="{{ general.json.EMAIL_HOST_USER }}"/>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label class="font-weight-bold">Password <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" placeholder="Normally your email password" name="password" value="{{ general.json.EMAIL_HOST_PASSWORD }}"/>
+                            </div>
+                        </div>
+                        <div class="form-row mt-4 d-none configForm" id="sendgrid">
+                            <div class="col-md-12">
+                                <h6 class="mb-2">SendGrid API Configuration</h6>
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label>APP KEY <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" placeholder="SendGrid app key" name="appkey" value=""/>
+                            </div>
+                        </div>
+                        <div class="form-row mt-4 d-none configForm" id="mailjet">
+                            <div class="col-md-12">
+                                <h6 class="mb-2">Mailjet API Configuration</h6>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label class="font-weight-bold">API PUBLIC KEY <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" placeholder="Mailjet API PUBLIC KEY" name="public_key" value=""/>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label class="font-weight-bold">API SECRET KEY <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" placeholder="Mailjet API SECRET KEY" name="secret_key" value=""/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-block btn--primary mr-2">Update</button>
+                    </div>
+                </form>
+            </div><!-- card end -->
+        </div>
+
+
+    </div>
+
+    <div id="testMailModal" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Test Mail Setup</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form action="{% url 'admin.send.test.mail' %}" method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="id">
+                    <div class="modal-body">
+                        <div class="form-row">
+                            <div class="form-group col-md-12">
+                                <label>Sent to <span class="text-danger">*</span></label>
+                                <input type="text" name="email" class="form-control" placeholder="Email Address" required=""> 
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn--dark" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn--success">Send</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block script %}
+    <script>
+        $(function () {
+            "use strict";
+            $('select[name=email_method]').on('change', function() {
+                var method = $(this).val();
+                $('.configForm').addClass('d-none');
+                if(method != 'php') {
+                    $(`#${method}`).removeClass('d-none');
+                }
+            }).change();
+
+        });
+
+    </script>
+{% endblock %}

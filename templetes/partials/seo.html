@@ -1,0 +1,10 @@
+<meta name="title" Content="{{ general.site_name }} {% if pageTitle %} - {{ pageTitle }} {% endif %}">
+<meta name="description" content="{{ seo.description }}">
+<meta name="keywords" content="{{ seo.json|join:', ' }}">
+<link rel="shortcut icon" href="{{ general.favicon.url }}" type="image/x-icon">
+
+<!-- Google / Search Engine Tags -->
+<meta itemprop="name" content="{{ general.site_name }} {% if pageTitle %} - {{ pageTitle }} {% endif %}">
+<meta itemprop="description" content="{{ seo.description }}">
+<meta itemprop="image" content="{{ seo.image.url }}">
+

@@ -1,0 +1,6 @@
+.navbar-search input {
+    width: calc(100% - 80px);
+    border: none;
+    padding-right: 0;
+    font-size: 0.75rem;
+}

@@ -1,0 +1,18 @@
+{% extends 'admin/layouts/master.html' %}
+
+{% block content %}   
+    <!-- page-wrapper start -->
+    <div class="page-wrapper default-version">
+        {% include "admin/partials/sidenav.html" %}
+        {% include "admin/partials/topnav.html" %}
+
+        <div class="body-wrapper">
+            <div class="bodywrapper__inner">
+                {% include "admin/partials/breadcrumb.html" %}
+                {% block panel %}
+                {% endblock %}
+            </div><!-- bodywrapper__inner end -->
+        </div><!-- body-wrapper end -->
+
+    </div>
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends 'admin/layouts/master.html' %}
+{% load static %}
+{% block content %}   
+<div class="page-wrapper default-version">
+    <div class="form-area bg_img" data-background="{% static 'admin/images/1.jpg' %}">
+        <div class="form-wrapper">
+            <h4 class="logo-text mb-15">Welcome to <strong>{{ general.site_name }}</strong></h4>
+            <p>Admin to {{ general.site_name }} Dashboard</p>
+            <form action="{{ app_path }}" method="POST" class="cmn-form mt-30">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="email">Username</label>
+                    <input type="text" name="username" class="form-control b-radius--capsule" id="username" placeholder="Enter your username">
+                    <i class="las la-user input-icon"></i>
+                </div>
+                <div class="form-group">
+                    <label for="pass">Password</label>
+                    <input type="password" name="password" class="form-control b-radius--capsule" id="pass" placeholder="Enter your password">
+                    <i class="las la-lock input-icon"></i>
+                </div>
+                <div class="form-group d-flex justify-content-between align-items-center">
+                    <a href="" class="text-muted text--small"><i class="las la-lock"></i>Forgot password?</a>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="submit-btn mt-25 b-radius--capsule">Login <i class="las la-sign-in-alt"></i></button>
+                </div>
+            </form>
+        </div>
+    </div><!-- login-area end -->
+</div>
+{% endblock %}
+
+

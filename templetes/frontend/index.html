@@ -1,0 +1,27 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+  	<title>
+  		{{ general.site_name }} {% if pageTitle %} - {{ pageTitle }} {% endif %}
+  	</title>
+	{% include 'partials/seo.html' %}
+
+	<link rel="stylesheet" href="{% static 'frontend/css/custom.css' %}">
+	{% include 'frontend/partials/css_cdn.html' %}
+</head>
+<body>
+
+{% if general.g_translate %}
+	{% include 'partials/google_translate.html' %}
+{% endif %}
+
+
+<h3 align="center">Hello Universe</h3>
+
+
+{% include 'frontend/partials/js_cdn.html' %}
+<script src="{% static 'frontend/js/custom.js' %}"></script>
+
+</body>
+</html>

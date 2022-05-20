@@ -1,0 +1,53 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'global/css/iziToast.min.css' %}">
+<script src="{% static 'global/js/iziToast.min.js' %}"></script>
+
+{% if form.errors %}
+    {% for field in form %}
+
+        {% for error in field.errors %}
+             <script> 
+                "use strict";
+                iziToast.error({message:"{{ error }}", position: "topRight"}); 
+            </script>
+        {% endfor %}
+        
+    {% endfor %}
+{% endif %}
+
+{% if form.non_field_errors %}
+    {% for error in form.non_field_errors %}
+
+        <script> 
+            "use strict";
+            iziToast.error({message:"{{ error }}", position: "topRight"}); 
+        </script>
+
+    {% endfor %}
+{% endif %}
+
+{% if messages %}
+    {% for message in messages %}
+
+        <script> 
+            "use strict";
+            iziToast.{{ message.tags }}({
+                message: '{{ message }}',
+                position: 'topRight',
+            });
+        </script>
+
+    {% endfor %}
+{% endif %}
+
+<script>
+    "use strict";
+    function notify(status,message) {
+        iziToast[status]({
+            message: message,
+            position: "topRight"
+        });
+    }
+</script>
+
+

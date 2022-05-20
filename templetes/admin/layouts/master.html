@@ -1,0 +1,118 @@
+{% load static %}
+<!-- meta tags and other links -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        {{ general.site_name }} {% if pageTitle %} - {{ pageTitle }} {% endif %}
+    </title> 
+    <!-- site favicon -->
+    <link rel="shortcut icon" type="image/png" href="{{ general.favicon.url }}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap">
+    <!-- bootstrap 4  -->
+    <link rel="stylesheet" href="{% static 'admin/css/vendor/bootstrap.min.css' %}">
+    <!-- bootstrap toggle css -->
+    <link rel="stylesheet" href="{% static 'admin/css/vendor/bootstrap-toggle.min.css' %}">
+    <!-- fontawesome 5  -->
+    <link rel="stylesheet" href="{% static 'admin/css/all.min.css' %}">
+    <!-- line-awesome webfont -->
+    <link rel="stylesheet" href="{% static 'admin/css/line-awesome.min.css' %}">
+
+    {% block style-lib %}
+    {% endblock %}
+                              
+    <!-- custom select box css -->
+    <link rel="stylesheet" href="{% static 'admin/css/vendor/nice-select.css' %}">
+    <!-- code preview css -->
+    <link rel="stylesheet" href="{% static 'admin/css/vendor/prism.css' %}">
+    <!-- select 2 css -->
+    <link rel="stylesheet" href="{% static 'admin/css/vendor/select2.min.css' %}">
+    <!-- jvectormap css -->
+    <link rel="stylesheet" href="{% static 'admin/css/vendor/jquery-jvectormap-2.0.5.css' %}">
+    <!-- datepicker css -->
+    <link rel="stylesheet" href="{% static 'admin/css/vendor/datepicker.min.css' %}">
+    <!-- timepicky for time picker css -->
+    <link rel="stylesheet" href="{% static 'admin/css/vendor/jquery-timepicky.css' %}">
+    <!-- bootstrap-clockpicker css -->
+    <link rel="stylesheet" href="{% static 'admin/css/vendor/bootstrap-clockpicker.min.css' %}">
+    <!-- bootstrap-pincode css -->
+    <link rel="stylesheet" href="{% static 'admin/css/vendor/bootstrap-pincode-input.css' %}">
+    <!-- dashdoard main css -->
+    <link rel="stylesheet" href="{% static 'admin/css/app.css' %}">
+
+
+    {% block style %}
+    {% endblock %}
+
+</head>
+<body>
+
+{% block content %}
+{% endblock %}
+
+<!-- jQuery library -->
+<script src="{% static 'admin/js/vendor/jquery-3.6.0.min.js' %}"></script>
+<!-- bootstrap js -->
+<script src="{% static 'admin/js/vendor/bootstrap.bundle.min.js' %}"></script>
+<!-- bootstrap-toggle js -->
+<script src="{% static 'admin/js/vendor/bootstrap-toggle.min.js' %}"></script>
+
+<!-- slimscroll js for custom scrollbar -->
+<script src="{% static 'admin/js/vendor/jquery.slimscroll.min.js' %}"></script>
+<!-- custom select box js -->
+<script src="{% static 'admin/js/vendor/jquery.nice-select.min.js' %}"></script>
+
+{% include 'partials/notify.html' %}
+{% block script-lib %}
+{% endblock %}
+    
+<script src="{% static 'admin/js/nicEdit.js' %}"></script>
+<!-- code preview js -->
+<script src="{% static 'admin/js/vendor/prism.js' %}"></script>
+<!-- seldct 2 js -->
+<script src="{% static 'admin/js/vendor/select2.min.js' %}"></script>
+<!-- main js -->
+<script src="{% static 'admin/js/app.js' %}"></script>
+
+<!-- LOAD NIC EDIT -->
+<script>
+    "use strict";
+
+    bkLib.onDomLoaded(function() {
+        $( ".nicEdit" ).each(function( index ) {
+            $(this).attr("id","nicEditor"+index);
+            new nicEditor({fullPanel : true}).panelInstance('nicEditor'+index,{hasPanel : true});
+        });
+    });
+
+    (function($){
+        $( document ).on('mouseover ', '.nicEdit-main,.nicEdit-panelContain',function(){
+            $('.nicEdit-main').focus();
+        });
+
+        let navLink = $('.sidebar__menu-wrapper li a');
+        let currentRoute = '{{ request.build_absolute_uri }}';
+
+        $.each(navLink, function(index, value) {
+            if(value.href == currentRoute){
+                let li = value.closest('li');
+                let sub = value.closest('.sidebar-submenu');
+                let drop = value.closest('.sidebar-dropdown');
+
+                $(sub).css('display', 'block');
+                $(li).addClass('active');
+                $(drop).addClass('active');
+            }
+        });
+
+    })(jQuery);
+
+</script>
+
+{% block script %}
+{% endblock %}
+
+</body>
+</html>
